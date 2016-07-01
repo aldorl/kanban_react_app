@@ -1,0 +1,12 @@
+{
+  "name": "kanban_react_app",
+  "version": "1.0.0",
+  "description": "Kanban App built on React",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Aldo Ruiz Luna",
+  "license": "ISC"
+}
