@@ -1,5 +1,4 @@
 {
-    "esnext": true,
     "preset": "google",
 
     "fileExtensions": [".js", ".jsx"],
@@ -16,7 +15,7 @@
     "disallowImplicitTypeConversion": ["string"],
 
     "safeContextKeyword": "that",
-    
+
     "excludeFiles": [
         "dist/**",
         "node_modules/**"
