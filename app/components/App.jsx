@@ -38,7 +38,7 @@ export default class App extends React.Component {
 
     addNote() {
         NoteActions.create({task: 'New task'});
-    };
+    }
 
     editNote(id, task) {
         // Don't modify if trying set an empty value
