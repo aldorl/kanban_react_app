@@ -80,8 +80,7 @@ export default class Lane extends React.Component {
         e.stopPropagation();
 
         const laneId = this.props.lane.id;
-
-        LaneActions.detachFromLane({laneId, noteId});
+        
         NoteActions.delete(noteId);
     };
 
