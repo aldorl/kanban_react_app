@@ -1,15 +1,6 @@
 import React from 'react';
 
 export default class Note extends React.Component {
-    constructor(props) {
-        super(props);
-
-        // Track `editing` state.
-        this.state = {
-            editing: false
-        };
-    }
-
     render() {
         // Render the component differently based on state.
         if (this.state.editing) {
@@ -74,6 +65,7 @@ export default class Note extends React.Component {
         //
         // See the *Typing with React* chapter for more information.
         const value = e.target.value;
+
         if (this.props.onEdit) {
             this.props.onEdit(value);
 
