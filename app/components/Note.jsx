@@ -39,7 +39,7 @@ export default class Note extends React.Component {
     render() {
         const {connectDragSource, connectDropTarget, isDragging,
         onMove, id, ...props} = this.props;
-
+        
         return connectDragSource(connectDropTarget(
             <li style={{
                     opacity: isDragging ? 0 : 1
