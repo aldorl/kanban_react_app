@@ -4,6 +4,8 @@
   "description": "Kanban App built on React",
   "main": "index.js",
   "scripts": {
+    "deploy": "gh-pages -d build",
+    "stats": "webpack --profile --json > stats.json",
     "build": "webpack",
     "start": "webpack-dev-server",
     "lint": "eslint . --ext .js --ext .jsx"
@@ -26,6 +28,7 @@
     "eslint-loader": "^1.4.0",
     "eslint-plugin-react": "^5.2.2",
     "extract-text-webpack-plugin": "^1.0.1",
+    "gh-pages": "^0.11.0",
     "html-webpack-plugin": "^2.22.0",
     "html-webpack-template": "^5.0.0",
     "jscs": "^3.0.6",
