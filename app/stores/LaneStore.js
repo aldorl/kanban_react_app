@@ -43,7 +43,7 @@ class LaneStore {
 
     attachToLane({laneId, noteId}) {
         const lanes = this.lanes.map(lane => {
-            if(lane.notes.includes(noteId)) {
+            if (lane.notes.includes(noteId)) {
                 lane.notes = lane.notes.filter(note => note !== noteId);
             }
 

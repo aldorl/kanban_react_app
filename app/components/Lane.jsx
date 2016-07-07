@@ -79,8 +79,6 @@ export default class Lane extends React.Component {
     deleteNote = (noteId, e) => {
         e.stopPropagation();
 
-        const laneId = this.props.lane.id;
-        
         NoteActions.delete(noteId);
     };
 
