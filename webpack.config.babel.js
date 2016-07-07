@@ -2,6 +2,11 @@ const path = require('path');
 const merge = require('webpack-merge');
 const webpack = require('webpack');
 const NpmInstallPlugin = require('npm-install-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanPlugin = require('clean-webpack-plugin');
+
+// Load *package.json* so we can use `dependencies` from there
+const pkg = require('./package.json');
 
 var stylelint = require('stylelint');
 
@@ -27,7 +32,8 @@ const common = {
     },
     output: {
         path: PATHS.build,
-        filename: 'bundle.js'
+        // Output using entry name
+        filename: '[name].js'
     },
     module: {
         preLoaders: [
@@ -69,7 +75,15 @@ const common = {
                 }
             })];
         }
-    }
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: 'node_modules/html-webpack-template/index.ejs',
+            title: 'Kanban App',
+            appMountId: 'app',
+            inject: false
+        })
+    ]
 };
 
 // Default configuration
@@ -77,7 +91,6 @@ if (TARGET === 'start' || !TARGET) {
     module.exports = merge(common, {
         devtool: 'eval-source-map',
         devServer: {
-            contentBase: PATHS.build,
             // Enable history API fallback so HTML5 History API based
             // routing works. This is a good default that will come
             // in handy in more complicated setups.
@@ -107,5 +120,41 @@ if (TARGET === 'start' || !TARGET) {
 }
 
 if (TARGET === 'build') {
-    module.exports = merge(common, {});
+    module.exports = merge(common, {
+        // Define vendor entry point needed for splitting
+        entry: {
+            vendor: Object.keys(pkg.dependencies).filter(function(v) {
+                // Exclude alt-utils as it won't work with this setup
+                // due to the way the package has been designed
+                // (no package.json main).
+                return v !== 'alt-utils';
+            })
+        },
+        output: {
+            path: PATHS.build,
+            filename: '[name].[chunkhash].js',
+            chunkFilename: '[chunkhash].js'
+        },
+        plugins: [
+            new CleanPlugin([PATHS.build]),
+            // Extract vendor and manifest files
+            new webpack.optimize.CommonsChunkPlugin({
+                names: ['vendor', 'manifest']
+            }),
+            // Setting DefinePlugin affects React library size!
+            // DefinePlugin replaces content "as is" so we need some extra quotes
+            // for the generated code to make sense
+            new webpack.DefinePlugin({
+                'process.env.NODE_ENV': '"production"'
+                // You can set this to JSON.stringify('development') for your
+                // development target to force NODE_ENV to development mode
+                // no matter what
+            }),
+            new webpack.optimize.UglifyJsPlugin({
+                compress: {
+                    warnings: false
+                }
+            })
+        ]
+    });
 }

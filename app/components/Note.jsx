@@ -41,7 +41,7 @@ export default class Note extends React.Component {
             onMove, id, editing, ...props} = this.props;
         // Pass through if we are editing
         const dragSource = editing ? a => a : connectDragSource;
-        
+
         return dragSource(connectDropTarget(
             <li style={{
                     opacity: isDragging ? 0 : 1
